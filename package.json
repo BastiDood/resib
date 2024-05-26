@@ -1,0 +1,21 @@
+{
+    "name": "hackathon",
+    "packageManager": "pnpm@9.1.2",
+    "type": "module",
+    "scripts": {
+        "compile": "hardhat compile",
+        "fmt": "prettier --check .",
+        "fmt:fix": "prettier --write .",
+        "test": "REPORT_GAS=true hardhat test"
+    },
+    "devDependencies": {
+        "@nomicfoundation/hardhat-ignition": "^0.15.4",
+        "@nomicfoundation/hardhat-toolbox-viem": "^3.0.0",
+        "@types/chai": "^4.3.16",
+        "chai": "4",
+        "hardhat": "^2.22.4",
+        "prettier": "^3.2.5",
+        "typescript": "^5.4.5",
+        "viem": "^2.12.3"
+    }
+}
