@@ -5,9 +5,16 @@
     "singleQuote": true,
     "printWidth": 120,
     "trailingComma": "all",
-    "plugins": ["prettier-plugin-solidity"],
+    "plugins": ["prettier-plugin-solidity", "prettier-plugin-svelte", "prettier-plugin-tailwindcss"],
     "overrides": [
         { "files": "*.{yml,yaml}", "options": { "tabWidth": 2 } },
-        { "files": "{j,t}sconfig.json", "options": { "parser": "jsonc" } }
+        { "files": "{j,t}sconfig.json", "options": { "parser": "jsonc" } },
+        {
+            "files": "*.svelte",
+            "options": {
+                "parser": "svelte",
+                "svelteAllowShorthand": true
+            }
+        }
     ]
 }

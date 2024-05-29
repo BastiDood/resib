@@ -1,17 +1,20 @@
 # Hardhat files
-cache
-artifacts
+hardhat/cache
+hardhat/artifacts
 
 # TypeChain files
-typechain
-typechain-types
+hardhat/typechain
+hardhat/typechain-types
 
 # solidity-coverage files
-coverage
-coverage.json
+hardhat/coverage
+hardhat/coverage.json
 
 # Hardhat Ignition default folder for deployments against a local node
-ignition/deployments/chain-31337
+hardhat/ignition/deployments/chain-31337
+
+svelte/.svelte-kit
+svelte/build
 
 # Ignore files for PNPM, NPM and YARN
 pnpm-lock.yaml
