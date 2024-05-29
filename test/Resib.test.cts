@@ -17,7 +17,7 @@ describe('Lock', () => {
         assert(typeof otherAccount !== 'undefined');
 
         const lockedAmount = 1n;
-        const lock = await hre.viem.deployContract('Contract', [unlockTime], { value: lockedAmount });
+        const lock = await hre.viem.deployContract('Resib', [unlockTime], { value: lockedAmount });
 
         const publicClient = await hre.viem.getPublicClient();
         return { lock, unlockTime, lockedAmount, owner, otherAccount, publicClient };
