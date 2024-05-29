@@ -44,19 +44,19 @@ contract StoreProductWarranty {
 
     // Update a store
     function updateStore(uint _storeId, string memory _name) public {
-        require(stores[_storeId].owner == msg.sender, "Only the owner can update the store");
+        require(stores[_storeId].owner == msg.sender, 'Only the owner can update the store');
         stores[_storeId].name = _name;
     }
 
     // Delete a store
     function deleteStore(uint _storeId) public {
-        require(stores[_storeId].owner == msg.sender, "Only the owner can delete the store");
+        require(stores[_storeId].owner == msg.sender, 'Only the owner can delete the store');
         delete stores[_storeId];
     }
 
     // Create a product
     function createProduct(string memory _name, uint _storeId, uint _warrantyPeriod) public {
-        require(stores[_storeId].owner == msg.sender, "Only the store owner can add products");
+        require(stores[_storeId].owner == msg.sender, 'Only the store owner can add products');
         productCounter++;
         products[productCounter] = Product(productCounter, _name, _storeId, _warrantyPeriod);
     }
@@ -68,20 +68,26 @@ contract StoreProductWarranty {
 
     // Update a product
     function updateProduct(uint _productId, string memory _name, uint _warrantyPeriod) public {
-        require(stores[products[_productId].storeId].owner == msg.sender, "Only the store owner can update the product");
+        require(
+            stores[products[_productId].storeId].owner == msg.sender,
+            'Only the store owner can update the product'
+        );
         products[_productId].name = _name;
         products[_productId].warrantyPeriod = _warrantyPeriod;
     }
 
     // Delete a product
     function deleteProduct(uint _productId) public {
-        require(stores[products[_productId].storeId].owner == msg.sender, "Only the store owner can delete the product");
+        require(
+            stores[products[_productId].storeId].owner == msg.sender,
+            'Only the store owner can delete the product'
+        );
         delete products[_productId];
     }
 
     // Create a warranty
     function createWarranty(uint _productId, address _customer) public {
-        require(stores[products[_productId].storeId].owner == msg.sender, "Only the store owner can issue warranties");
+        require(stores[products[_productId].storeId].owner == msg.sender, 'Only the store owner can issue warranties');
         warrantyCounter++;
         uint startDate = block.timestamp;
         uint endDate = startDate + (products[_productId].warrantyPeriod * 1 days);
@@ -95,14 +101,20 @@ contract StoreProductWarranty {
 
     // Update a warranty
     function updateWarranty(uint _warrantyId, uint _startDate, uint _endDate) public {
-        require(stores[products[warranties[_warrantyId].productId].storeId].owner == msg.sender, "Only the store owner can update the warranty");
+        require(
+            stores[products[warranties[_warrantyId].productId].storeId].owner == msg.sender,
+            'Only the store owner can update the warranty'
+        );
         warranties[_warrantyId].startDate = _startDate;
         warranties[_warrantyId].endDate = _endDate;
     }
 
     // Delete a warranty
     function deleteWarranty(uint _warrantyId) public {
-        require(stores[products[warranties[_warrantyId].productId].storeId].owner == msg.sender, "Only the store owner can delete the warranty");
+        require(
+            stores[products[warranties[_warrantyId].productId].storeId].owner == msg.sender,
+            'Only the store owner can delete the warranty'
+        );
         delete warranties[_warrantyId];
     }
 }
