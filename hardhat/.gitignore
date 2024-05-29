@@ -1,6 +1,6 @@
 # Hardhat files
-cache
 artifacts
+cache
 
 # TypeChain files
 typechain
@@ -12,8 +12,3 @@ coverage.json
 
 # Hardhat Ignition default folder for deployments against a local node
 ignition/deployments/chain-31337
-
-# Ignore files for PNPM, NPM and YARN
-pnpm-lock.yaml
-package-lock.json
-yarn.lock
