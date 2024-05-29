@@ -5,9 +5,13 @@ This project demonstrates a basic Hardhat use case. It comes with a sample contr
 Try running some of the following tasks:
 
 ```shell
-pnpm hardhat help
-pnpm hardhat test
 REPORT_GAS=true pnpm hardhat test
 pnpm hardhat node
-pnpm hardhat ignition deploy ./ignition/modules/Lock.ts
+pnpm hardhat ignition deploy ./ignition/modules/Resib.ts
+
+# Compile the Hardhat artifacts and Typechain types
+pnpm compile
+
+# Build as a JavaScript library
+pnpm build
 ```

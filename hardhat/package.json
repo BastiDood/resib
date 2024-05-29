@@ -1,7 +1,11 @@
 {
     "name": "hardhat-resib",
     "type": "module",
+    "exports": {
+        "import": "./dist/index.js"
+    },
     "scripts": {
+        "build": "tsup",
         "compile": "hardhat compile",
         "test": "REPORT_GAS=true hardhat test"
     },
@@ -12,6 +16,7 @@
         "@types/chai": "^4.3.16",
         "chai": "^4.4.1",
         "ethers": "^6.12.1",
-        "hardhat": "^2.22.4"
+        "hardhat": "^2.22.4",
+        "tsup": "^8.0.2"
     }
 }

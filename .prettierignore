@@ -13,6 +13,8 @@ hardhat/coverage.json
 # Hardhat Ignition default folder for deployments against a local node
 hardhat/ignition/deployments/chain-31337
 
+hardhat/dist
+
 svelte/.svelte-kit
 svelte/build
 
