@@ -6,12 +6,12 @@
         "test": "REPORT_GAS=true hardhat test"
     },
     "devDependencies": {
+        "@nomicfoundation/hardhat-ethers": "^3.0.6",
         "@nomicfoundation/hardhat-ignition": "^0.15.4",
-        "@nomicfoundation/hardhat-toolbox-viem": "^3.0.0",
+        "@nomicfoundation/hardhat-toolbox": "^5.0.0",
         "@types/chai": "^4.3.16",
         "chai": "^4.4.1",
-        "hardhat": "^2.22.4",
-        "typescript": "^5.4.5",
-        "viem": "^2.13.1"
+        "ethers": "^6.12.1",
+        "hardhat": "^2.22.4"
     }
 }
