@@ -41,6 +41,46 @@ describe('Resib Contract Tests', () => {
         expect(testStore.name).to.be.eq('');
     });
 
+    // Product CRUD Tests
+    it("should be able to create and get products", async () => {
+        const { cResib } = await loadFixture(deployFixture); 
+        await cResib.write.createStore(["sampleStore"]);
+        await cResib.write.createProduct(["sampleProduct", 1, 21]);
 
-    
+        const testProduct = await cResib.read.getProduct([1])
+        expect(testProduct.id).to.be.eq(1n);
+        expect(testProduct.name).to.be.eq("sampleProduct");
+        expect(testProduct.storeId).to.be.eq(1n);
+        expect(testProduct.warrantyPeriod).to.be.eq(21n);
+    });
+
+    it("should be able to update products", async () => {
+        const { cResib } = await loadFixture(deployFixture); 
+        await cResib.write.createStore(["sampleStore"]);
+        await cResib.write.createProduct(["sampleProduct", 1, 21]);
+
+        await cResib.write.updateProduct([1, "newProduct", 25]);
+
+        const testProduct = await cResib.read.getProduct([1])
+        expect(testProduct.id).to.be.eq(1n);
+        expect(testProduct.name).to.be.eq("newProduct");
+        expect(testProduct.storeId).to.be.eq(1n);
+        expect(testProduct.warrantyPeriod).to.be.eq(25n);
+    });
+
+    it("should be able to delete products", async () => {
+        const { cResib } = await loadFixture(deployFixture); 
+        await cResib.write.createStore(["sampleStore"]);
+        await cResib.write.createProduct(["sampleProduct", 1, 21]);
+
+        await cResib.write.deleteProduct([1]);
+
+        // Again, not sure how to test non-existence of a product
+        const testProduct = await cResib.read.getProduct([1])
+        expect(testProduct.id).to.be.eq(0n);
+        expect(testProduct.name).to.be.eq('');
+        expect(testProduct.storeId).to.be.eq(0n);
+        expect(testProduct.warrantyPeriod).to.be.eq(0n);
+    });
+
 });
