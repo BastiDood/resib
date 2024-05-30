@@ -1,6 +1,13 @@
 import type { Config } from 'tailwindcss';
+import { join } from 'node:path';
+import { skeleton } from '@skeletonlabs/tw-plugin';
 
 export default {
     darkMode: 'selector',
-    content: ['./src/**/*.{css,html,js,svelte,ts}'],
+    plugins: [skeleton({ themes: { preset: ['wintry'] } })],
+    content: [
+        './src/**/*.{css,html,js,svelte,ts}',
+        // eslint-disable-next-line no-undef
+        join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}'),
+    ],
 } satisfies Config;
