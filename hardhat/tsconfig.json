@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "target": "ESNext",
-        "module": "Preserve",
+        "module": "CommonJS",
         "moduleResolution": "Node10",
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
