@@ -1,5 +1,6 @@
 import type { WebAppManifest } from 'web-app-manifest';
 import { json } from '@sveltejs/kit';
+
 import icon192 from '$lib/favicon/android-chrome-192x192.png?url';
 import icon512 from '$lib/favicon/android-chrome-512x512.png?url';
 
