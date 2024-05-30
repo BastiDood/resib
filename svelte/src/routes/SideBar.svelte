@@ -3,6 +3,9 @@
     import { Home } from '@steeze-ui/heroicons';
     import { Icon } from '@steeze-ui/svelte-icon';
     import { page } from '$app/stores';
+
+    import logoWithText from '$lib/logo/logo-with-text.svg';
+
     $: ({ pathname } = $page.url);
 </script>
 
@@ -14,4 +17,5 @@
         <Icon src={Home} slot="lead" class="size-8" />
         <span>Home</span>
     </AppRailAnchor>
+    <img src={logoWithText} alt="Resib Shield Logo" slot="trail" class="block bg-transparent p-4 dark:bg-white" />
 </AppRail>
