@@ -18,22 +18,22 @@ describe('Resib', () => {
         it('should be able to create and get stores', async () => {
             const { Resib } = await loadFixture(deployFixture);
             await Resib.createStore('sampleStore');
-            const { id, name } = await Resib.getStore(1);
-            expect(id).eq(1n);
+            const { id, name } = await Resib.getStore(0);
+            expect(id).eq(0n);
             expect(name).eq('sampleStore');
         });
         it('should be able to update stores', async () => {
             const { Resib } = await loadFixture(deployFixture);
             await Resib.createStore('sampleStore');
-            await Resib.updateStore(1, 'newStore');
-            const { name } = await Resib.getStore(1);
+            await Resib.updateStore(0, 'newStore');
+            const { name } = await Resib.getStore(0);
             expect(name).eq('newStore');
         });
         it('should be able to delete stores', async () => {
             const { Resib } = await loadFixture(deployFixture);
             await Resib.createStore('sampleStore');
-            await Resib.deleteStore(1);
-            const { id, name, owner } = await Resib.getStore(1);
+            await Resib.deleteStore(0);
+            const { id, name, owner } = await Resib.getStore(0);
             expect(id).eq(0n);
             expect(name).eq('');
             expect(owner).eq('0x0000000000000000000000000000000000000000');
@@ -43,30 +43,30 @@ describe('Resib', () => {
         it('should be able to create and get products', async () => {
             const { Resib } = await loadFixture(deployFixture);
             await Resib.createStore('sampleStore');
-            await Resib.createProduct('sampleProduct', 1, 21);
-            const { id, name, storeId, warrantyPeriod } = await Resib.getProduct(1);
-            expect(id).eq(1n);
+            await Resib.createProduct('sampleProduct', 0, 21);
+            const { id, name, storeId, warrantyPeriod } = await Resib.getProduct(0);
+            expect(id).eq(0n);
             expect(name).eq('sampleProduct');
-            expect(storeId).eq(1n);
+            expect(storeId).eq(0n);
             expect(warrantyPeriod).eq(21n);
         });
         it('should be able to update products', async () => {
             const { Resib } = await loadFixture(deployFixture);
             await Resib.createStore('sampleStore');
-            await Resib.createProduct('sampleProduct', 1, 21);
-            await Resib.updateProduct(1, 'newProduct', 25);
-            const { id, name, storeId, warrantyPeriod } = await Resib.getProduct(1);
-            expect(id).eq(1n);
+            await Resib.createProduct('sampleProduct', 0, 21);
+            await Resib.updateProduct(0, 'newProduct', 25);
+            const { id, name, storeId, warrantyPeriod } = await Resib.getProduct(0);
+            expect(id).eq(0n);
             expect(name).eq('newProduct');
-            expect(storeId).eq(1n);
+            expect(storeId).eq(0n);
             expect(warrantyPeriod).eq(25n);
         });
         it('should be able to delete products', async () => {
             const { Resib } = await loadFixture(deployFixture);
             await Resib.createStore('sampleStore');
-            await Resib.createProduct('sampleProduct', 1, 21);
-            await Resib.deleteProduct(1);
-            const { id, name, storeId, warrantyPeriod } = await Resib.getProduct(1);
+            await Resib.createProduct('sampleProduct', 0, 21);
+            await Resib.deleteProduct(0);
+            const { id, name, storeId, warrantyPeriod } = await Resib.getProduct(0);
             expect(id).eq(0n);
             expect(name).eq('');
             expect(storeId).eq(0n);
@@ -77,31 +77,31 @@ describe('Resib', () => {
         it('should be able to create and get warranties', async () => {
             const { Resib, owner } = await loadFixture(deployFixture);
             await Resib.createStore('sampleStore');
-            await Resib.createProduct('sampleProduct', 1, 21);
-            await Resib.createWarranty(1, owner);
-            const { id, productId, customer } = await Resib.getWarranty(1);
-            expect(id).eq(1n);
-            expect(productId).eq(1n);
+            await Resib.createProduct('sampleProduct', 0, 21);
+            await Resib.createWarranty(0, owner);
+            const { id, productId, customer } = await Resib.getWarranty(0);
+            expect(id).eq(0n);
+            expect(productId).eq(0n);
             expect(customer).eq(owner);
         });
         it('should be able to update warranties', async () => {
             const { Resib, owner } = await loadFixture(deployFixture);
             await Resib.createStore('sampleStore');
-            await Resib.createProduct('sampleProduct', 1, 21);
-            await Resib.createWarranty(1, owner);
-            await Resib.updateWarranty(1, 500, 1000);
-            const { id, startDate, endDate } = await Resib.getWarranty(1);
-            expect(id).eq(1n);
+            await Resib.createProduct('sampleProduct', 0, 21);
+            await Resib.createWarranty(0, owner);
+            await Resib.updateWarranty(0, 500, 1000);
+            const { id, startDate, endDate } = await Resib.getWarranty(0);
+            expect(id).eq(0n);
             expect(startDate).eq(500n);
             expect(endDate).eq(1000n);
         });
         it('should be able to delete warranties', async () => {
             const { Resib, owner } = await loadFixture(deployFixture);
             await Resib.createStore('sampleStore');
-            await Resib.createProduct('sampleProduct', 1, 21);
-            await Resib.createWarranty(1, owner);
-            await Resib.deleteWarranty(1);
-            const { id, productId, customer, startDate, endDate } = await Resib.getWarranty(1);
+            await Resib.createProduct('sampleProduct', 0, 21);
+            await Resib.createWarranty(0, owner);
+            await Resib.deleteWarranty(0);
+            const { id, productId, customer, startDate, endDate } = await Resib.getWarranty(0);
             expect(id).eq(0n);
             expect(productId).eq(0n);
             expect(customer).eq('0x0000000000000000000000000000000000000000');

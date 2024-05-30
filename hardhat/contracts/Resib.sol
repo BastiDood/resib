@@ -23,18 +23,21 @@ contract Resib {
         uint endDate;
     }
 
-    uint private storeCounter;
-    uint private productCounter;
-    uint private warrantyCounter;
+    // uint private storeCounter;
+    // uint private productCounter;
+    // uint private warrantyCounter;
 
-    mapping(uint => Store) public stores;
-    mapping(uint => Product) public products;
-    mapping(uint => Warranty) public warranties;
+    // mapping(uint => Store) public stores;
+    // mapping(uint => Product) public products;
+    // mapping(uint => Warranty) public warranties;
+
+    Store[] public stores;
+    Product[] public products;
+    Warranty[] public warranties;
 
     // Create a store
     function createStore(string memory _name) public {
-        storeCounter++;
-        stores[storeCounter] = Store(storeCounter, _name, msg.sender);
+        stores.push(Store(stores.length, _name, msg.sender));
     }
 
     // Read a store
@@ -57,8 +60,7 @@ contract Resib {
     // Create a product
     function createProduct(string memory _name, uint _storeId, uint _warrantyPeriod) public {
         require(stores[_storeId].owner == msg.sender, 'Only the store owner can add products');
-        productCounter++;
-        products[productCounter] = Product(productCounter, _name, _storeId, _warrantyPeriod);
+        products.push(Product(products.length, _name, _storeId, _warrantyPeriod));
     }
 
     // Read a product
@@ -88,10 +90,9 @@ contract Resib {
     // Create a warranty
     function createWarranty(uint _productId, address _customer) public {
         require(stores[products[_productId].storeId].owner == msg.sender, 'Only the store owner can issue warranties');
-        warrantyCounter++;
         uint startDate = block.timestamp;
         uint endDate = startDate + (products[_productId].warrantyPeriod * 1 days);
-        warranties[warrantyCounter] = Warranty(warrantyCounter, _productId, _customer, startDate, endDate);
+        warranties.push(Warranty(warranties.length, _productId, _customer, startDate, endDate));
     }
 
     // Read a warranty
