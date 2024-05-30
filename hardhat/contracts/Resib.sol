@@ -34,7 +34,7 @@ contract Resib {
     // Create a store
     function createStore(string memory _name) public {
         stores.push(Store(stores.length, _name, msg.sender));
-        emit StoreCreated(stores.length-1);
+        emit StoreCreated(stores.length - 1);
     }
 
     // Read a store
@@ -46,7 +46,7 @@ contract Resib {
     function createProduct(string memory _name, uint _storeId, uint _warrantyPeriod) public {
         require(stores[_storeId].owner == msg.sender, 'Only the store owner can add products');
         products.push(Product(products.length, _name, _storeId, _warrantyPeriod));
-        emit ProductCreated(products.length-1);
+        emit ProductCreated(products.length - 1);
     }
 
     // Read a product
@@ -60,12 +60,11 @@ contract Resib {
         uint startDate = block.timestamp;
         uint endDate = startDate + (products[_productId].warrantyPeriod * 1 days);
         warranties.push(Warranty(warranties.length, _productId, _customer, startDate, endDate));
-        emit WarrantyCreated(warranties.length-1);
+        emit WarrantyCreated(warranties.length - 1);
     }
 
     // Read a warranty
     function getWarranty(uint _warrantyId) public view returns (Warranty memory) {
         return warranties[_warrantyId];
     }
-
 }

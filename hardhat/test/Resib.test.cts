@@ -18,9 +18,7 @@ describe('Resib', () => {
         it('should be able to create and get stores', async () => {
             const { Resib, owner } = await loadFixture(deployFixture);
             const Owner = Resib.connect(owner);
-            await expect(Owner.createStore('sampleStore'))
-                .to.emit(Owner, 'StoreCreated')
-                .withArgs(0n);
+            await expect(Owner.createStore('sampleStore')).to.emit(Owner, 'StoreCreated').withArgs(0n);
 
             const { id, name } = await Owner.getStore(0);
             expect(id).eq(0n);
@@ -52,9 +50,7 @@ describe('Resib', () => {
             await Resib.createProduct('sampleProduct', 0, 21);
 
             // TODO: See if startDate and endDate can be emitted and tested
-            await expect(Owner.createWarranty(0, owner))
-                .to.emit(Owner, 'WarrantyCreated')
-                .withArgs(0n);
+            await expect(Owner.createWarranty(0, owner)).to.emit(Owner, 'WarrantyCreated').withArgs(0n);
 
             await Resib.createWarranty(0, owner);
             const { id, productId, customer } = await Resib.getWarranty(0);
