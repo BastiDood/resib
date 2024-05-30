@@ -23,13 +23,9 @@ contract Resib {
         uint endDate;
     }
 
-    // uint private storeCounter;
-    // uint private productCounter;
-    // uint private warrantyCounter;
-
-    // mapping(uint => Store) public stores;
-    // mapping(uint => Product) public products;
-    // mapping(uint => Warranty) public warranties;
+    event StoreCreated(uint indexed id);
+    event ProductCreated(uint indexed id);
+    event WarrantyCreated(uint indexed id);
 
     Store[] public stores;
     Product[] public products;
@@ -38,6 +34,7 @@ contract Resib {
     // Create a store
     function createStore(string memory _name) public {
         stores.push(Store(stores.length, _name, msg.sender));
+        emit StoreCreated(stores.length-1);
     }
 
     // Read a store
@@ -49,6 +46,7 @@ contract Resib {
     function createProduct(string memory _name, uint _storeId, uint _warrantyPeriod) public {
         require(stores[_storeId].owner == msg.sender, 'Only the store owner can add products');
         products.push(Product(products.length, _name, _storeId, _warrantyPeriod));
+        emit ProductCreated(products.length-1);
     }
 
     // Read a product
@@ -62,6 +60,7 @@ contract Resib {
         uint startDate = block.timestamp;
         uint endDate = startDate + (products[_productId].warrantyPeriod * 1 days);
         warranties.push(Warranty(warranties.length, _productId, _customer, startDate, endDate));
+        emit WarrantyCreated(warranties.length-1);
     }
 
     // Read a warranty
