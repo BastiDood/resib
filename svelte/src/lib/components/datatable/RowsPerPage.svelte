@@ -14,9 +14,7 @@
     <span>Show</span>
     <select class="select" bind:value={$rowsPerPage}>
         {#each options as option}
-            <option value={option}>
-                {option}
-            </option>
+            <option value={option}>{option}</option>
         {/each}
     </select>
 </aside>

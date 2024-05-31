@@ -1,5 +1,7 @@
 <script lang="ts">
+    import { ArrowsUpDown, BarsArrowDown, BarsArrowUp } from '@steeze-ui/heroicons';
     import type { DataHandler } from '@vincjo/datatables';
+    import { Icon } from '@steeze-ui/svelte-icon';
     import type data from '$lib/datatable/data';
 
     type Data = (typeof data)[number];
@@ -9,19 +11,22 @@
     export let orderBy: keyof Data;
 
     const sorted = handler.getSort();
+    $: ({ direction, identifier } = $sorted);
 </script>
 
-<th on:click={() => handler.sort(row => row[orderBy])} class="cursor-pointer select-none">
+<th on:click={() => handler.sort(orderBy)} class="cursor-pointer select-none">
     <div class="flex h-full items-center justify-start gap-x-2">
         <slot />
-        {#if $sorted.identifier === orderBy}
-            {#if $sorted.direction === 'asc'}
-                &darr;
-            {:else if $sorted.direction === 'desc'}
-                &uarr;
+        <span>
+            {#if identifier === orderBy}
+                {#if direction === 'asc'}
+                    <Icon src={BarsArrowDown} theme="micro" class="size-4" />
+                {:else if direction === 'desc'}
+                    <Icon src={BarsArrowUp} theme="micro" class="size-4" />
+                {/if}
+            {:else}
+                <Icon src={ArrowsUpDown} theme="micro" class="size-4" />
             {/if}
-        {:else}
-            &updownarrow;
-        {/if}
+        </span>
     </div>
 </th>
