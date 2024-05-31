@@ -4,6 +4,8 @@
     import { enhance } from '$app/forms';
     import { ProgressRadial } from '@skeletonlabs/skeleton';
 
+    import Datatable from '$lib/components/Datatable.svelte';
+
     /** @type {import('./$types').PageData} */
 
     let formLoading = false;
@@ -45,7 +47,7 @@
 		}} 
 		>
 
-        <h3 class="h3 font-bold text-center">
+        <h3 class="h3 font-bold text-center py-4">
             Create Warranty Card
         </h3>
 			{#each keys as key}
@@ -65,7 +67,7 @@
 		</form>
 
         <div class="w-full md:w-3/5 lg:w-3/5 card p-4 mb-4 bg-[#E5E5E5]">
-
+            <Datatable />
         </div>
 	</div>
 {/if}

@@ -47,5 +47,8 @@
         "viem": "^2.13.1",
         "vite": "^5.2.12",
         "vite-plugin-tailwind-purgecss": "^0.3.3"
+    },
+    "dependencies": {
+        "@vincjo/datatables": "^1.14.5"
     }
 }
