@@ -1,16 +1,10 @@
 <script>
+    import Hero from '$lib/components/Hero.svelte';
     import card1header from '$lib/cards/pexels-kampus-8815843.jpeg?url';
     import card2header from '$lib/cards/pexels-adonyi-foto-1409215.jpeg?url';
 </script>
 
-<div class="flex items-center justify-center bg-gradient-to-r from-slate-600 to-slate-800 p-[80px]">
-    <h1 class="h1 text-center font-bold drop-shadow">
-        <span class="bg-gradient-to-br from-blue-500 to-cyan-300 box-decoration-clone bg-clip-text text-transparent">
-            Welcome to Resib.
-        </span>
-    </h1>
-</div>
-
+<Hero>Welcome to Resib</Hero>
 <div class="flex flex-col items-center justify-center gap-4 p-10 lg:flex-row">
     <div class="card card-hover block max-w-96">
         <header class="card-header">
@@ -26,12 +20,9 @@
             </div>
         </section>
         <footer class="card-footer">
-            <button type="button" class="btn variant-filled">
-                <a href="/issue-warranty"> Issue Warranty </a>
-            </button>
+            <a href="/issue-warranty" class="btn variant-filled">Issue Warranty</a>
         </footer>
     </div>
-
     <div class="card card-hover block max-w-96">
         <header class="card-header">
             <img src={card2header} alt="Customer" class="aspect-video object-cover" />
@@ -46,9 +37,7 @@
             </div>
         </section>
         <footer class="card-footer">
-            <button type="button" class="btn variant-filled">
-                <a href="/view-warranty"> View Warranties </a>
-            </button>
+            <a href="/view-warranty" class="btn variant-filled">View Warranties</a>
         </footer>
     </div>
 </div>

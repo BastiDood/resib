@@ -1,13 +1,17 @@
 <script lang="ts">
     import type { DataHandler } from '@vincjo/datatables';
+    import type data from '$lib/datatable/data';
 
-    export let handler: DataHandler;
-    export let orderBy: string;
+    type Data = (typeof data)[number];
+    // eslint-disable-next-line init-declarations
+    export let handler: DataHandler<Data>;
+    // eslint-disable-next-line init-declarations
+    export let orderBy: keyof Data;
 
     const sorted = handler.getSort();
 </script>
 
-<th on:click={() => handler.sort(orderBy)} class="cursor-pointer select-none">
+<th on:click={() => handler.sort(row => row[orderBy])} class="cursor-pointer select-none">
     <div class="flex h-full items-center justify-start gap-x-2">
         <slot />
         {#if $sorted.identifier === orderBy}

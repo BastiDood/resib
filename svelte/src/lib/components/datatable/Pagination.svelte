@@ -1,6 +1,11 @@
 <script lang="ts">
     import type { DataHandler } from '@vincjo/datatables';
-    export let handler: DataHandler;
+    import type data from '$lib/datatable/data';
+
+    type Data = (typeof data)[number];
+    // eslint-disable-next-line init-declarations
+    export let handler: DataHandler<Data>;
+
     const pageNumber = handler.getPageNumber();
     const pageCount = handler.getPageCount();
     const pages = handler.getPages({ ellipsis: true });
@@ -24,8 +29,10 @@
             class:ellipse={page === null}
             on:click={() => handler.setPage(page)}
         >
-            {page ?? '...'}
+            {page}
         </button>
+    {:else}
+        <div>...</div>
     {/each}
     <button
         type="button"
