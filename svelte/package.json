@@ -28,6 +28,7 @@
         "@types/web-app-manifest": "^1.0.8",
         "@typescript-eslint/eslint-plugin": "^7.11.0",
         "@typescript-eslint/parser": "^7.11.0",
+        "@vincjo/datatables": "^1.14.5",
         "autoprefixer": "^10.4.19",
         "concurrently": "^8.2.2",
         "eslint": "^8.57.0",
@@ -47,8 +48,5 @@
         "viem": "^2.13.1",
         "vite": "^5.2.12",
         "vite-plugin-tailwind-purgecss": "^0.3.3"
-    },
-    "dependencies": {
-        "@vincjo/datatables": "^1.14.5"
     }
 }
