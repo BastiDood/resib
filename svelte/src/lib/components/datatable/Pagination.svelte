@@ -1,5 +1,7 @@
 <script lang="ts">
+    import { ArrowLeft, ArrowRight } from '@steeze-ui/heroicons';
     import type { DataHandler } from '@vincjo/datatables';
+    import { Icon } from '@steeze-ui/svelte-icon';
     import type data from '$lib/datatable/data';
 
     type Data = (typeof data)[number];
@@ -19,7 +21,7 @@
         class:disabled={$pageNumber === 1}
         on:click={() => handler.setPage('previous')}
     >
-        ←
+        <Icon src={ArrowLeft} theme="micro" class="size-4" />
     </button>
     {#each $pages as page}
         <button
@@ -40,7 +42,7 @@
         class:disabled={$pageNumber === $pageCount}
         on:click={() => handler.setPage('next')}
     >
-        →
+        <Icon src={ArrowRight} theme="micro" class="size-4" />
     </button>
 </section>
 
@@ -52,7 +54,7 @@
         class:disabled={$pageNumber === 1}
         on:click={() => handler.setPage('previous')}
     >
-        ←
+        <Icon src={ArrowLeft} theme="micro" class="size-4" />
     </button>
     <button
         type="button"
@@ -60,6 +62,6 @@
         class:disabled={$pageNumber === $pageCount}
         on:click={() => handler.setPage('next')}
     >
-        →
+        <Icon src={ArrowRight} theme="micro" class="size-4" />
     </button>
 </section>
