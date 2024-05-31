@@ -9,6 +9,7 @@ export const prerender = true;
 export function GET() {
     return json({
         name: 'Resib',
+        description: 'Paving the way towards a pain-free warranty system.',
         display: 'standalone',
         theme_color: '#2f2d32',
         background_color: '#ffffff',
