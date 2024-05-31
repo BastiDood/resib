@@ -1,14 +1,16 @@
 <script>
     import Hero from '$lib/components/Hero.svelte';
-    import card1header from '$lib/cards/pexels-kampus-8815843.jpeg?url';
-    import card2header from '$lib/cards/pexels-adonyi-foto-1409215.jpeg?url';
 </script>
 
 <Hero>Welcome to Resib</Hero>
 <div class="flex flex-col items-center justify-center gap-4 p-10 lg:flex-row">
     <div class="card card-hover block max-w-96">
         <header class="card-header">
-            <img src={card1header} alt="Store Owner" class="aspect-video object-cover" />
+            <enhanced:img
+                src="$lib/cards/pexels-kampus-8815843.jpeg"
+                alt="Store Owner"
+                class="aspect-video object-cover"
+            />
         </header>
         <section class="p-4">
             <div class="grid">
@@ -25,7 +27,11 @@
     </div>
     <div class="card card-hover block max-w-96">
         <header class="card-header">
-            <img src={card2header} alt="Customer" class="aspect-video object-cover" />
+            <enhanced:img
+                src="$lib/cards/pexels-adonyi-foto-1409215.jpeg"
+                alt="Customer"
+                class="aspect-video object-cover"
+            />
         </header>
         <section class="p-4">
             <div class="grid">
