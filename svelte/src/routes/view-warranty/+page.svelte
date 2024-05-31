@@ -20,46 +20,42 @@
     </button>
 </div>
 
-<div class="flex justify-center items-center gap-4 flex-col">
-    <h3 class="h3 font-bold text-center py-4">
-    Your Active Warranty Cards
+<div class="flex justify-center items-center w-full">
+    <h3 class="h6 md:h3 font-bold py-4">
+        Your Active Warranty Cards
     </h3>
+</div>
 
-    <div class="md:w-3/5 lg:w-4/5 card px-4 py-8 mb-4 bg-[#E5E5E5]">
-        <div class="grid grid-cols-[repeat(auto-fill, minmax(16rem, 1fr))] gap-4 place-items-center">
-            {#each data as item}
-                <!-- <div class="grid  gap-4 justify-center  place-items-center aspect-[3.370/2.125]"> -->
-                    
-                <div class="card card-hover p-4 sm:p-6 variant-ghost-surface h-48">
-                    <div class="aspect-[3.370/2.125] w-64">
-                        <div class="pb-4">
-                            <h3 class="h3 font-bold pb-10">
-                                WARRANTY
-                            </h3>
+<div class="mx-auto my-auto grid">
+    <div class="grid md:grid-cols-[repeat(auto-fill,minmax(22rem,1fr))] gap-4 py-4 md:p-4 place-items-center justify-center items-center">
+        {#each data as item}
+            <div class="card card-hover py-4 p-6 variant-ghost-surface">
+                <div class="aspect-[3.370/2.125] h-fit sm:h-48">
+                    <div class="pb-4">
+                        <h3 class="h3 font-bold pb-10">
+                            WARRANTY
+                        </h3>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <h5 class="h5 text-xs opacity-40">Customer Name</h5>
+                            <p>{item.customer}</p>
                         </div>
-                        <!-- <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <h5 class="h5 text-xs opacity-40">Customer Name</h5>
-                                <p>{item.customer}</p>
-                            </div>
-                            <div>
-                                <h5 class="h5 text-xs opacity-40">Product ID</h5>
-                                <p>{item.productId}</p>
-                            </div>
-                            <div>
-                                <h5 class="h5 text-xs opacity-40">Date Issued</h5>
-                                <p>{item.startDate}</p>
-                            </div>
-                            <div>
-                                <h5 class="h5 text-xs opacity-40">Valid Until</h5>
-                                <p>{item.endDate}</p>
-                            </div>
-                        </div> -->
+                        <div>
+                            <h5 class="h5 text-xs opacity-40">Product ID</h5>
+                            <p>{item.productId}</p>
+                        </div>
+                        <div>
+                            <h5 class="h5 text-xs opacity-40">Date Issued</h5>
+                            <p>{item.startDate}</p>
+                        </div>
+                        <div>
+                            <h5 class="h5 text-xs opacity-40">Valid Until</h5>
+                            <p>{item.endDate}</p>
+                        </div>
                     </div>
                 </div>
-                    
-                <!-- </div> -->
-            {/each}
-        </div>
+            </div>
+        {/each}
     </div>
 </div>
