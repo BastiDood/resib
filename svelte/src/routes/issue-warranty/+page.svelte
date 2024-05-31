@@ -1,5 +1,5 @@
 <script>
-    let keys = ['userID', 'firstName', 'middleName', 'lastName', 'purchaseDate', 'address', 'sex', 'bloodType', 'nationality', 'weight', 'height', 'phoneNumber', 'email'];
+    let keys = ['productId', 'customer'];
 
     import { enhance } from '$app/forms';
     import { ProgressRadial } from '@skeletonlabs/skeleton';
@@ -33,76 +33,39 @@
 		</button>
 	</div>
 
-	<div class="flex justify-center">
-		<form method="POST" action="" class="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4 w-full md:w-4/5 lg:w-3/5 card p-4 mb-4 bg-[#E5E5E5]" 
+	<div class="flex justify-center gap-4 flex-col md:flex-row">
+		<form method="POST" action="" class="flex flex-col gap-2 md:gap-4 w-full md:w-2/5 lg:w-1/5 card p-4 mb-4 bg-[#E5E5E5]" 
 		use:enhance={() => {
 			formLoading = true;
 			return async ({ update }) => {
 				formLoading = false;
-				// doneAPL.set(true);
 				update();
 				window.history.back();
 			};
 		}} 
 		>
+
+        <h3 class="h3 font-bold text-center">
+            Create Warranty Card
+        </h3>
 			{#each keys as key}
                 <label>
-                    {#if key == "purchaseDate"}
-                        <span>Purchase Date</span>
-                        <input name={key} class="input variant-form-material" type="date" required>
-                    {:else if key == "sex"}
-                        <span>Sex</span>
-                        <select name={key} class="select variant-form-material" required>
-                            <option value = 'sel' disabled selected>Select Sex</option>
-                            <option value = 'M'>Male</option>
-                            <option value = 'F'>Female</option>
-                        </select>
-                    {:else if key == "bloodType"}
-                        <span>Blood Type</span>
-                        <select name={key} class="select variant-form-material" required>
-                            <option value = 'sel' disabled selected>Select Blood Type</option>
-                            <option value = 'O-'>O-</option>
-                            <option value = 'O+'>O+</option>
-                            <option value = 'A-'>A-</option>
-                            <option value = 'A+'>A+</option>
-                            <option value = 'B-'>B-</option>
-                            <option value = 'B+'>B+</option>
-                            <option value = 'AB-'>AB-</option>
-                            <option value = 'AB+'>AB+</option>
-                        </select>
-                    {:else if key == "weight"}
-                        <span>Weight (kg)</span>
-                        <div class="input-group input-group-divider grid-cols-[1fr_auto] variant-form-material">
-                            <input name={key} type="number"  placeholder="Enter weight" required/>
-                            <div class="input-group-shim">kg</div>
-                        </div>
-                    {:else if key == "height"}
-                        <span>Height (cm)</span>
-                        <div class="input-group input-group-divider grid-cols-[1fr_auto] variant-form-material">
-                            <input name={key} type="number" placeholder="Enter height" required/>
-                            <div class="input-group-shim">cm</div>
-                        </div>
-                    {:else if key == "phoneNumber"}
-                        <span>Mobile Number</span>
-                        <div class="input-group input-group-divider grid-cols-[auto_1fr_auto] variant-form-material">
-                            <div class="input-group-shim">+63</div>
-                            <input name={key} type="tel" placeholder="1234567890" required/>
-                        </div>
-                    {:else if key == "email"}
-                        <span>Email Address</span>
-                        <div class="input-group input-group-divider grid-cols-[auto_1fr_auto] variant-form-material">
-                            <div class="input-group-shim">@</div>
-                            <input name={key} type="email" placeholder="email@example.com" required/>
-                        </div>
-                    {:else}
+                    {#if key == "productId"}
+                        <span>Product ID</span>
+                        <input name={key} class="input variant-form-material" placeholder="Enter Product ID" type="number" required>
+                    {:else if key == "customer"}
                         <span>{key}</span> 
-                        <input name={key} class="input variant-form-material" type="text" required>
+                        <input name={key} class="input variant-form-material" placeholder="Enter Customer Name" type="text" required>
                     {/if}
                 </label>
 			{/each}
 			<div class="col-span-1 md:col-span-2 flex justify-center">
-				<input type="submit" class="btn variant-filled bg-[#374FE7] text-white mt-5" value="Submit APL"/>
+				<input type="submit" class="btn variant-filled text-white mt-5" value="Create Warranty"/>
 			</div>
 		</form>
+
+        <div class="w-full md:w-3/5 lg:w-3/5 card p-4 mb-4 bg-[#E5E5E5]">
+
+        </div>
 	</div>
 {/if}
