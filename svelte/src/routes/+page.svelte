@@ -46,7 +46,11 @@
             </div>
         </section>
         <footer class="card-footer">
-            <button type="button" class="btn variant-filled">View Warranties</button>
+            <button type="button" class="btn variant-filled">
+                <a href="/view-warranty">
+                    View Warranties
+                </a>
+            </button>
         </footer>
     </div>
 </div>
