@@ -25,7 +25,11 @@
             </div>
         </section>
         <footer class="card-footer">
-            <button type="button" class="btn variant-filled">Issue Warranty</button>
+            <button type="button" class="btn variant-filled">
+                <a href="/issue-warranty">
+                    Issue Warranty
+                </a>
+            </button>
         </footer>
     </div>
 

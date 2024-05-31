@@ -23,6 +23,7 @@
         "@sveltejs/adapter-static": "^3.0.1",
         "@sveltejs/kit": "^2.5.10",
         "@sveltejs/vite-plugin-svelte": "^3.1.1",
+        "@tailwindcss/forms": "^0.5.7",
         "@tailwindcss/typography": "^0.5.13",
         "@types/web-app-manifest": "^1.0.8",
         "@typescript-eslint/eslint-plugin": "^7.11.0",
