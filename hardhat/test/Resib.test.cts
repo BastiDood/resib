@@ -4,13 +4,14 @@ import { ethers } from 'hardhat';
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers';
 
 async function deployFixture() {
-    const [owner] = await ethers.getSigners();
+    const [owner, other] = await ethers.getSigners();
     assert(typeof owner !== 'undefined');
+    assert(typeof other !== 'undefined');
     const factory = await ethers.getContractFactory('Resib');
     const Resib = await factory.deploy();
     await Resib.waitForDeployment();
     const resib = await Resib.getAddress();
-    return { Resib, resib, owner };
+    return { Resib, resib, owner, other };
 }
 
 describe('Resib', () => {
@@ -18,9 +19,11 @@ describe('Resib', () => {
         it('should be able to create and get stores', async () => {
             const { Resib, owner } = await loadFixture(deployFixture);
             const Owner = Resib.connect(owner);
+
             await expect(Owner.createStore('Sample Store 0')).emit(Owner, 'StoreCreated').withArgs(0n);
             await expect(Owner.createStore('Sample Store 1')).emit(Owner, 'StoreCreated').withArgs(1n);
             await expect(Owner.createStore('Sample Store 2')).emit(Owner, 'StoreCreated').withArgs(2n);
+
             const [first, second, third, ...rest] = await Owner.getStores();
             assert(typeof first !== 'undefined');
             assert(typeof second !== 'undefined');
@@ -38,6 +41,7 @@ describe('Resib', () => {
         it('should be able to create and get products', async () => {
             const { Resib, owner } = await loadFixture(deployFixture);
             const Owner = Resib.connect(owner);
+
             await expect(Owner.createStore('Sample Store')).emit(Owner, 'StoreCreated').withArgs(0n);
             await expect(Owner.createProduct(0n, 'Sample Product 0', 20n))
                 .emit(Owner, 'ProductCreated')
@@ -48,10 +52,12 @@ describe('Resib', () => {
             await expect(Owner.createProduct(0n, 'Sample Product 2', 10n))
                 .emit(Owner, 'ProductCreated')
                 .withArgs(0n, 2n);
+
             await expect(Owner.createStore('Irrelevant Store')).emit(Owner, 'StoreCreated').withArgs(1n);
             await expect(Owner.createProduct(1n, 'Ignored Product 0', 1n))
                 .emit(Owner, 'ProductCreated')
                 .withArgs(1n, 3n);
+
             const [first, second, third, ...rest] = await Owner.getProductsByStoreId(0n);
             assert(typeof first !== 'undefined');
             assert(typeof second !== 'undefined');
@@ -69,6 +75,7 @@ describe('Resib', () => {
         it('should be able to create and get warranties', async () => {
             const { Resib, owner } = await loadFixture(deployFixture);
             const Owner = Resib.connect(owner);
+
             await expect(Owner.createStore('Sample Store')).emit(Owner, 'StoreCreated').withArgs(0n);
             await expect(Owner.createProduct(0n, 'Sample Product', 21n))
                 .emit(Owner, 'ProductCreated')
@@ -76,11 +83,13 @@ describe('Resib', () => {
             await expect(Owner.createWarranty(0n, owner)).emit(Owner, 'WarrantyCreated').withArgs(0n, 0n, 0n);
             await expect(Owner.createWarranty(0n, owner)).emit(Owner, 'WarrantyCreated').withArgs(0n, 0n, 1n);
             await expect(Owner.createWarranty(0n, owner)).emit(Owner, 'WarrantyCreated').withArgs(0n, 0n, 2n);
+
             await expect(Owner.createStore('Irrelevant Store')).emit(Owner, 'StoreCreated').withArgs(1n);
             await expect(Owner.createProduct(1n, 'Ignored Product 0', 1n))
                 .emit(Owner, 'ProductCreated')
                 .withArgs(1n, 1n);
             await expect(Owner.createWarranty(1n, owner)).emit(Owner, 'WarrantyCreated').withArgs(1n, 1n, 3n);
+
             const [first, second, third, ...rest] = await Owner.getWarrantiesByStoreId(0n);
             assert(typeof first !== 'undefined');
             assert(typeof second !== 'undefined');
@@ -95,6 +104,31 @@ describe('Resib', () => {
             expect(third.warranty).equals(2n);
             expect(third.customer).equals(owner.address);
             expect(third.product).equals('Sample Product');
+            // TODO: Test start dates and end dates.
+        });
+        it('should be able to get own warranties', async () => {
+            const { Resib, owner, other } = await loadFixture(deployFixture);
+            const Owner = Resib.connect(owner);
+            const Other = Resib.connect(other);
+
+            await expect(Owner.createStore('Sample Store')).emit(Owner, 'StoreCreated').withArgs(0n);
+            await expect(Owner.createProduct(0n, 'Sample Product', 21n))
+                .emit(Owner, 'ProductCreated')
+                .withArgs(0n, 0n);
+            await expect(Owner.createWarranty(0n, owner)).emit(Owner, 'WarrantyCreated').withArgs(0n, 0n, 0n);
+            await expect(Owner.createWarranty(0n, other)).emit(Owner, 'WarrantyCreated').withArgs(0n, 0n, 1n);
+
+            const [ownerWarranty, ...ownerRest] = await Owner.getOwnedWarranties();
+            assert(typeof ownerWarranty !== 'undefined');
+            expect(ownerRest).empty;
+            expect(ownerWarranty.store).equals('Sample Store');
+            expect(ownerWarranty.product).equals('Sample Product');
+
+            const [otherWarranty, ...otherRest] = await Other.getOwnedWarranties();
+            assert(typeof otherWarranty !== 'undefined');
+            expect(otherRest).empty;
+            expect(otherWarranty.store).equals('Sample Store');
+            expect(otherWarranty.product).equals('Sample Product');
             // TODO: Test start dates and end dates.
         });
     });
