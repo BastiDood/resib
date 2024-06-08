@@ -77,12 +77,23 @@ contract Resib {
         string name;
     }
 
-    function getProductsByStoreId(uint _storeId) public view returns (StoreProductInfo[] memory _infos) {
+    function getProductsByStoreId(uint _storeId) public view returns (StoreProductInfo[] memory) {
+        uint _count = 0;
+        for (uint i = 0; i < _products.length; ++i) {
+            Product memory _product = _products[i];
+            if (_product.store == _storeId) ++_count;
+        }
+
+        uint _index = 0;
+        StoreProductInfo[] memory _infos = new StoreProductInfo[](_count);
         for (uint i = 0; i < _products.length; ++i) {
             Product memory _product = _products[i];
             if (_product.store == _storeId)
-                _infos[_infos.length] = StoreProductInfo(i, _product.warrantyPeriod, _product.name);
+                _infos[_index++] = StoreProductInfo(i, _product.warrantyPeriod, _product.name);
         }
+
+        assert(_count == _index);
+        return _infos;
     }
 
     struct StoreProductWarrantyInfo {
@@ -94,12 +105,21 @@ contract Resib {
         string product;
     }
 
-    function getWarrantiesByStoreId(uint _storeId) public view returns (StoreProductWarrantyInfo[] memory _infos) {
+    function getWarrantiesByStoreId(uint _storeId) public view returns (StoreProductWarrantyInfo[] memory) {
+        uint count = 0;
+        for (uint i = 0; i < _warranties.length; ++i) {
+            Warranty memory _warranty = _warranties[i];
+            Product memory _product = _products[_warranty.product];
+            if (_product.store == _storeId) ++count;
+        }
+
+        uint index = 0;
+        StoreProductWarrantyInfo[] memory _infos = new StoreProductWarrantyInfo[](count);
         for (uint i = 0; i < _warranties.length; ++i) {
             Warranty memory _warranty = _warranties[i];
             Product memory _product = _products[_warranty.product];
             if (_product.store == _storeId)
-                _infos[_infos.length] = StoreProductWarrantyInfo(
+                _infos[index++] = StoreProductWarrantyInfo(
                     i,
                     _warranty.customer,
                     _warranty.startDate,
@@ -108,6 +128,9 @@ contract Resib {
                     _product.name
                 );
         }
+
+        assert(index == count);
+        return _infos;
     }
 
     function voidWarrantyStatus(uint _warrantyId) public {
