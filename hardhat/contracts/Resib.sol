@@ -43,7 +43,7 @@ contract Resib {
     }
 
     // Create a product
-    function createProduct(string memory _name, uint _storeId, uint _warrantyPeriod) public {
+    function createProduct(uint _storeId, string memory _name, uint _warrantyPeriod) public {
         require(stores[_storeId].owner == msg.sender, 'Only the store owner can add products');
         products.push(Product(products.length, _name, _storeId, _warrantyPeriod));
         emit ProductCreated(products.length - 1);
