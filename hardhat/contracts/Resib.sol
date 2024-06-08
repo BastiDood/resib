@@ -65,7 +65,7 @@ contract Resib {
 
         uint _warrantyId = _warranties.length;
         _product.warranties.push(_warrantyId);
-        _customerWarranties[msg.sender].push(_warrantyId);
+        _customerWarranties[_customer].push(_warrantyId);
 
         emit WarrantyCreated(_storeId, _productId, _warrantyId);
         _warranties.push(Warranty(_productId, _customer, _startDate, _endDate, 1));
