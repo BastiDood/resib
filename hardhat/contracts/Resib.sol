@@ -71,7 +71,21 @@ contract Resib {
         _warranties.push(Warranty(_productId, _customer, _startDate, _endDate, 1));
     }
 
-    struct StoreWarrantyInfo {
+    struct StoreProductInfo {
+        uint product;
+        uint warrantyPeriod;
+        string name;
+    }
+
+    function getProductsByStoreId(uint _storeId) public view returns (StoreProductInfo[] memory _infos) {
+        for (uint i = 0; i < _products.length; ++i) {
+            Product memory _product = _products[i];
+            if (_product.store == _storeId)
+                _infos[_infos.length] = StoreProductInfo(i, _product.warrantyPeriod, _product.name);
+        }
+    }
+
+    struct StoreProductWarrantyInfo {
         uint warranty;
         address customer;
         uint startDate;
@@ -80,14 +94,12 @@ contract Resib {
         string product;
     }
 
-    function getWarrantiesByStoreId(uint _storeId) public view returns (StoreWarrantyInfo[] memory) {
-        uint _warrantyCount = _warranties.length;
-        StoreWarrantyInfo[] memory _infos;
-        for (uint i = 0; i < _warrantyCount; ++i) {
+    function getWarrantiesByStoreId(uint _storeId) public view returns (StoreProductWarrantyInfo[] memory _infos) {
+        for (uint i = 0; i < _warranties.length; ++i) {
             Warranty memory _warranty = _warranties[i];
             Product memory _product = _products[_warranty.product];
             if (_product.store == _storeId)
-                _infos[_infos.length] = StoreWarrantyInfo(
+                _infos[_infos.length] = StoreProductWarrantyInfo(
                     i,
                     _warranty.customer,
                     _warranty.startDate,
@@ -96,7 +108,6 @@ contract Resib {
                     _product.name
                 );
         }
-        return _infos;
     }
 
     function voidWarrantyStatus(uint _warrantyId) public {
