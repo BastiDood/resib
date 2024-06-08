@@ -152,9 +152,37 @@ describe('Resib', () => {
                 .withArgs(0n, 0n);
             await expect(Owner.createWarranty(0n, owner)).emit(Owner, 'WarrantyCreated').withArgs(0n, 0n, 0n);
 
-            await Owner.processWarrantyStatus(0n);
-            await Owner.resetWarrantyStatus(0n);
-            await Owner.voidWarrantyStatus(0n);
+            {
+                const [warranty, ...rest] = await Owner.getOwnedWarranties();
+                assert(typeof warranty !== 'undefined');
+                expect(rest).empty;
+                expect(warranty.status).equals(1n);
+            }
+
+            {
+                await Owner.processWarrantyStatus(0n);
+                const [warranty, ...rest] = await Owner.getOwnedWarranties();
+                assert(typeof warranty !== 'undefined');
+                expect(rest).empty;
+                expect(warranty.status).equals(2n);
+            }
+
+            {
+                await Owner.resetWarrantyStatus(0n);
+                const [warranty, ...rest] = await Owner.getOwnedWarranties();
+                assert(typeof warranty !== 'undefined');
+                expect(rest).empty;
+                expect(warranty.status).equals(1n);
+            }
+
+            {
+                await Owner.voidWarrantyStatus(0n);
+                const [warranty, ...rest] = await Owner.getOwnedWarranties();
+                assert(typeof warranty !== 'undefined');
+                expect(rest).empty;
+                expect(warranty.status).equals(0n);
+            }
+
             // TODO: Test Error Path
         });
         it('should be able to avail warranties', async () => {
@@ -167,10 +195,44 @@ describe('Resib', () => {
                 .withArgs(0n, 0n);
             await expect(Owner.createWarranty(0n, owner)).emit(Owner, 'WarrantyCreated').withArgs(0n, 0n, 0n);
 
-            await Owner.processWarrantyStatus(0n);
-            await Owner.resetWarrantyStatus(0n);
-            await Owner.processWarrantyStatus(0n);
-            await Owner.availWarrantyStatus(0n);
+            {
+                const [warranty, ...rest] = await Owner.getOwnedWarranties();
+                assert(typeof warranty !== 'undefined');
+                expect(rest).empty;
+                expect(warranty.status).equals(1n);
+            }
+
+            {
+                await Owner.processWarrantyStatus(0n);
+                const [warranty, ...rest] = await Owner.getOwnedWarranties();
+                assert(typeof warranty !== 'undefined');
+                expect(rest).empty;
+                expect(warranty.status).equals(2n);
+            }
+
+            {
+                await Owner.resetWarrantyStatus(0n);
+                const [warranty, ...rest] = await Owner.getOwnedWarranties();
+                assert(typeof warranty !== 'undefined');
+                expect(rest).empty;
+                expect(warranty.status).equals(1n);
+            }
+
+            {
+                await Owner.processWarrantyStatus(0n);
+                const [warranty, ...rest] = await Owner.getOwnedWarranties();
+                assert(typeof warranty !== 'undefined');
+                expect(rest).empty;
+                expect(warranty.status).equals(2n);
+            }
+
+            {
+                await Owner.availWarrantyStatus(0n);
+                const [warranty, ...rest] = await Owner.getOwnedWarranties();
+                assert(typeof warranty !== 'undefined');
+                expect(rest).empty;
+                expect(warranty.status).equals(3n);
+            }
             // TODO: Test Error Path
         });
     });

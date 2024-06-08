@@ -188,6 +188,7 @@ contract Resib {
         string product;
         uint startDate;
         uint endDate;
+        uint8 status; // void=0 | active=1 | processing=2 | availed=3
     }
 
     function getOwnedWarranties() public view returns (CustomerWarrantyInfo[] memory) {
@@ -198,7 +199,13 @@ contract Resib {
             Warranty memory _warranty = _warranties[_warrantyId];
             Product memory _product = _products[_warranty.product];
             Store memory _store = _stores[_product.store];
-            _infos[i] = CustomerWarrantyInfo(_store.name, _product.name, _warranty.startDate, _warranty.endDate);
+            _infos[i] = CustomerWarrantyInfo(
+                _store.name,
+                _product.name,
+                _warranty.startDate,
+                _warranty.endDate,
+                _warranty.status
+            );
         }
         return _infos;
     }
