@@ -33,20 +33,21 @@ contract Resib {
 
     // Create a store
     function createStore(string memory _name) public {
+        emit StoreCreated(stores.length);
         stores.push(Store(stores.length, _name, msg.sender));
-        emit StoreCreated(stores.length - 1);
     }
 
     // Read a store
     function getStore(uint _storeId) public view returns (Store memory) {
+        require(stores[_storeId].owner == msg.sender, 'only the store owner can view info');
         return stores[_storeId];
     }
 
     // Create a product
     function createProduct(uint _storeId, string memory _name, uint _warrantyPeriod) public {
-        require(stores[_storeId].owner == msg.sender, 'Only the store owner can add products');
+        require(stores[_storeId].owner == msg.sender, 'only the store owner can add products');
+        emit ProductCreated(products.length);
         products.push(Product(products.length, _name, _storeId, _warrantyPeriod));
-        emit ProductCreated(products.length - 1);
     }
 
     // Read a product
@@ -56,11 +57,11 @@ contract Resib {
 
     // Create a warranty
     function createWarranty(uint _productId, address _customer) public {
-        require(stores[products[_productId].storeId].owner == msg.sender, 'Only the store owner can issue warranties');
+        require(stores[products[_productId].storeId].owner == msg.sender, 'only the store owner can issue warranties');
         uint startDate = block.timestamp;
         uint endDate = startDate + (products[_productId].warrantyPeriod * 1 days);
+        emit WarrantyCreated(warranties.length);
         warranties.push(Warranty(warranties.length, _productId, _customer, startDate, endDate));
-        emit WarrantyCreated(warranties.length - 1);
     }
 
     // Read a warranty
