@@ -20,7 +20,11 @@ contract Resib {
         address customer;
         uint startDate;
         uint endDate;
+        uint8 status; // void=0 | active=1 | processing=2 | availed=3
     }
+
+    error StoreOwnerRequired();
+    error InvalidWarrantyUpdate();
 
     event StoreCreated(uint indexed store);
     event ProductCreated(uint indexed store, uint indexed product);
@@ -40,7 +44,7 @@ contract Resib {
 
     function createProduct(uint _storeId, string memory _name, uint _warrantyPeriod) public {
         Store storage _store = _stores[_storeId];
-        require(_store.owner == msg.sender, 'only the store owner can add products');
+        if (_store.owner != msg.sender) revert StoreOwnerRequired();
 
         uint _productId = _products.length;
         _store.products.push(_productId);
@@ -54,7 +58,7 @@ contract Resib {
         Product storage _product = _products[_productId];
         uint _storeId = _product.store;
         Store storage _store = _stores[_storeId];
-        require(_store.owner == msg.sender, 'only the store owner can issue warranties');
+        if (_store.owner != msg.sender) revert StoreOwnerRequired();
 
         uint _startDate = block.timestamp;
         uint _endDate = _startDate + _product.warrantyPeriod * 1 days;
@@ -64,7 +68,71 @@ contract Resib {
         _customerWarranties[msg.sender].push(_warrantyId);
 
         emit WarrantyCreated(_storeId, _productId, _warrantyId);
-        _warranties.push(Warranty(_productId, _customer, _startDate, _endDate));
+        _warranties.push(Warranty(_productId, _customer, _startDate, _endDate, 1));
+    }
+
+    struct StoreWarrantyInfo {
+        uint warranty;
+        address customer;
+        uint startDate;
+        uint endDate;
+        uint8 status; // void=0 | active=1 | processing=2 | availed=3
+        string product;
+    }
+
+    function getWarrantiesByStoreId(uint _storeId) public view returns (StoreWarrantyInfo[] memory) {
+        uint _warrantyCount = _warranties.length;
+        StoreWarrantyInfo[] memory _infos;
+        for (uint i = 0; i < _warrantyCount; ++i) {
+            Warranty memory _warranty = _warranties[i];
+            Product memory _product = _products[_warranty.product];
+            if (_product.store == _storeId)
+                _infos[_infos.length] = StoreWarrantyInfo(
+                    i,
+                    _warranty.customer,
+                    _warranty.startDate,
+                    _warranty.endDate,
+                    _warranty.status,
+                    _product.name
+                );
+        }
+        return _infos;
+    }
+
+    function voidWarrantyStatus(uint _warrantyId) public {
+        Warranty storage _warranty = _warranties[_warrantyId];
+        Product storage _product = _products[_warranty.product];
+        Store storage _store = _stores[_product.store];
+        if (_store.owner != msg.sender) revert StoreOwnerRequired();
+        if (_warranty.status == 0 || _warranty.status >= 3) revert InvalidWarrantyUpdate();
+        _warranty.status = 0;
+    }
+
+    function resetWarrantyStatus(uint _warrantyId) public {
+        Warranty storage _warranty = _warranties[_warrantyId];
+        Product storage _product = _products[_warranty.product];
+        Store storage _store = _stores[_product.store];
+        if (_store.owner != msg.sender) revert StoreOwnerRequired();
+        if (_warranty.status != 2) revert InvalidWarrantyUpdate();
+        _warranty.status = 1;
+    }
+
+    function processWarrantyStatus(uint _warrantyId) public {
+        Warranty storage _warranty = _warranties[_warrantyId];
+        Product storage _product = _products[_warranty.product];
+        Store storage _store = _stores[_product.store];
+        if (_store.owner != msg.sender) revert StoreOwnerRequired();
+        if (_warranty.status != 1) revert InvalidWarrantyUpdate();
+        _warranty.status = 2;
+    }
+
+    function availWarrantyStatus(uint _warrantyId) public {
+        Warranty storage _warranty = _warranties[_warrantyId];
+        Product storage _product = _products[_warranty.product];
+        Store storage _store = _stores[_product.store];
+        if (_store.owner != msg.sender) revert StoreOwnerRequired();
+        if (_warranty.status != 2) revert InvalidWarrantyUpdate();
+        _warranty.status = 3;
     }
 
     struct StoreInfo {
@@ -81,22 +149,22 @@ contract Resib {
         return _infos;
     }
 
-    struct WarrantyInfo {
+    struct CustomerWarrantyInfo {
         string store;
         string product;
         uint startDate;
         uint endDate;
     }
 
-    function getOwnedWarranties() public view returns (WarrantyInfo[] memory) {
+    function getOwnedWarranties() public view returns (CustomerWarrantyInfo[] memory) {
         uint[] memory _warrantyIds = _customerWarranties[msg.sender];
-        WarrantyInfo[] memory _infos = new WarrantyInfo[](_warrantyIds.length);
+        CustomerWarrantyInfo[] memory _infos = new CustomerWarrantyInfo[](_warrantyIds.length);
         for (uint i = 0; i < _warrantyIds.length; ++i) {
             uint _warrantyId = _warrantyIds[i];
             Warranty memory _warranty = _warranties[_warrantyId];
             Product memory _product = _products[_warranty.product];
             Store memory _store = _stores[_product.store];
-            _infos[i] = WarrantyInfo(_store.name, _product.name, _warranty.startDate, _warranty.endDate);
+            _infos[i] = CustomerWarrantyInfo(_store.name, _product.name, _warranty.startDate, _warranty.endDate);
         }
         return _infos;
     }
