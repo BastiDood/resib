@@ -21,7 +21,17 @@ describe('Resib', () => {
             await expect(Owner.createStore('Sample Store 0')).emit(Owner, 'StoreCreated').withArgs(0n);
             await expect(Owner.createStore('Sample Store 1')).emit(Owner, 'StoreCreated').withArgs(1n);
             await expect(Owner.createStore('Sample Store 2')).emit(Owner, 'StoreCreated').withArgs(2n);
-            // TODO: Get stores.
+            const [first, second, third, ...rest] = await Owner.getStores();
+            assert(typeof first !== 'undefined');
+            assert(typeof second !== 'undefined');
+            assert(typeof third !== 'undefined');
+            expect(rest).empty;
+            expect(first.name).equals('Sample Store 0');
+            expect(first.owner).equals(owner.address);
+            expect(second.name).equals('Sample Store 1');
+            expect(second.owner).equals(owner.address);
+            expect(third.name).equals('Sample Store 2');
+            expect(third.owner).equals(owner.address);
         });
     });
     describe('Product', () => {
