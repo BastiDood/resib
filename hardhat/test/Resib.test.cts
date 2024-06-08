@@ -39,11 +39,19 @@ describe('Resib', () => {
             const { Resib, owner } = await loadFixture(deployFixture);
             const Owner = Resib.connect(owner);
             await expect(Owner.createStore('Sample Store')).emit(Owner, 'StoreCreated').withArgs(0n);
-            await expect(Owner.createProduct(0n, 'Sample Product 0', 20n)).emit(Owner, 'ProductCreated').withArgs(0n, 0n);
-            await expect(Owner.createProduct(0n, 'Sample Product 1', 40n)).emit(Owner, 'ProductCreated').withArgs(0n, 1n);
-            await expect(Owner.createProduct(0n, 'Sample Product 2', 10n)).emit(Owner, 'ProductCreated').withArgs(0n, 2n);
+            await expect(Owner.createProduct(0n, 'Sample Product 0', 20n))
+                .emit(Owner, 'ProductCreated')
+                .withArgs(0n, 0n);
+            await expect(Owner.createProduct(0n, 'Sample Product 1', 40n))
+                .emit(Owner, 'ProductCreated')
+                .withArgs(0n, 1n);
+            await expect(Owner.createProduct(0n, 'Sample Product 2', 10n))
+                .emit(Owner, 'ProductCreated')
+                .withArgs(0n, 2n);
             await expect(Owner.createStore('Irrelevant Store')).emit(Owner, 'StoreCreated').withArgs(1n);
-            await expect(Owner.createProduct(1n, 'Ignored Product 0', 1n)).emit(Owner, 'ProductCreated').withArgs(1n, 3n);
+            await expect(Owner.createProduct(1n, 'Ignored Product 0', 1n))
+                .emit(Owner, 'ProductCreated')
+                .withArgs(1n, 3n);
             const [first, second, third, ...rest] = await Owner.getProductsByStoreId(0n);
             assert(typeof first !== 'undefined');
             assert(typeof second !== 'undefined');
@@ -62,12 +70,16 @@ describe('Resib', () => {
             const { Resib, owner } = await loadFixture(deployFixture);
             const Owner = Resib.connect(owner);
             await expect(Owner.createStore('Sample Store')).emit(Owner, 'StoreCreated').withArgs(0n);
-            await expect(Owner.createProduct(0n, 'Sample Product', 21n)).emit(Owner, 'ProductCreated').withArgs(0n, 0n);
+            await expect(Owner.createProduct(0n, 'Sample Product', 21n))
+                .emit(Owner, 'ProductCreated')
+                .withArgs(0n, 0n);
             await expect(Owner.createWarranty(0n, owner)).emit(Owner, 'WarrantyCreated').withArgs(0n, 0n, 0n);
             await expect(Owner.createWarranty(0n, owner)).emit(Owner, 'WarrantyCreated').withArgs(0n, 0n, 1n);
             await expect(Owner.createWarranty(0n, owner)).emit(Owner, 'WarrantyCreated').withArgs(0n, 0n, 2n);
             await expect(Owner.createStore('Irrelevant Store')).emit(Owner, 'StoreCreated').withArgs(1n);
-            await expect(Owner.createProduct(1n, 'Ignored Product 0', 1n)).emit(Owner, 'ProductCreated').withArgs(1n, 1n);
+            await expect(Owner.createProduct(1n, 'Ignored Product 0', 1n))
+                .emit(Owner, 'ProductCreated')
+                .withArgs(1n, 1n);
             await expect(Owner.createWarranty(1n, owner)).emit(Owner, 'WarrantyCreated').withArgs(1n, 1n, 3n);
             const [first, second, third, ...rest] = await Owner.getWarrantiesByStoreId(0n);
             assert(typeof first !== 'undefined');
