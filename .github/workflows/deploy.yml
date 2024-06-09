@@ -7,8 +7,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      PUBLIC_DEPLOYMENT_ADDRESS: '0x4637e25808686165072C303d6215a9B2A7DCCDEA'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,6 +35,9 @@ jobs:
         run: pnpm --filter=hardhat-resib run build
       - name: Check HTML
         run: pnpm --filter=svelte-resib run lint:html
+      - name: Inject Public Environment Variables
+        working-directory: svelte
+        run: echo 'PUBLIC_RESIB_DEPLOYMENT=0x4637e25808686165072C303d6215a9B2A7DCCDEA' > .env
       - name: Check CSS
         run: pnpm --filter=svelte-resib run lint:css
       - name: Synchronize SvelteKit
