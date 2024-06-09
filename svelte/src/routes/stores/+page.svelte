@@ -63,7 +63,7 @@
         >
             <div class="input-group input-group-divider grid-cols-[auto_1fr_auto] items-center">
                 <div class="input-group-shim h-full"><Icon src={Plus} theme="mini" class="size-8" /></div>
-                <input type="text" required name="store" placeholder="Store Name" class="px-3 py-2" />
+                <input type="text" required name="store" placeholder="Resib" class="px-3 py-2" />
                 <button type="submit" class="variant-filled-secondary h-full">Create Store</button>
             </div>
         </form>

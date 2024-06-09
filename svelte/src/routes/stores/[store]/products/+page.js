@@ -7,5 +7,5 @@ async function getProductsByStoreId(store) {
 }
 
 export function load({ params: { store } }) {
-    return { storeId: parseInt(store, 10), products: getProductsByStoreId(store) };
+    return { products: getProductsByStoreId(store) };
 }
