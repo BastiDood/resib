@@ -11,7 +11,7 @@ hardhat/coverage
 hardhat/coverage.json
 
 # Hardhat Ignition default folder for deployments against a local node
-hardhat/ignition/deployments/chain-31337
+hardhat/ignition/deployments
 
 hardhat/dist
 
