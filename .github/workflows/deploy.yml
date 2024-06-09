@@ -1,0 +1,49 @@
+name: Deploy
+
+on:
+  push:
+    branches: main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      PUBLIC_DEPLOYMENT_ADDRESS: '0x4637e25808686165072C303d6215a9B2A7DCCDEA'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install `pnpm` via Corepack
+        run: corepack enable
+      - name: Get `pnpm` Store Directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - uses: actions/cache@v4
+        name: Setup `pnpm` Cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install All Dependencies
+        run: pnpm install
+      - name: Check Formatters
+        run: pnpm run fmt
+      - name: Compile Contract
+        run: pnpm --filter=hardhat-resib run compile
+      - name: Test Contract
+        run: pnpm --filter=hardhat-resib test
+      - name: Build Contract as Library
+        run: pnpm --filter=hardhat-resib run build
+      - name: Check HTML
+        run: pnpm --filter=svelte-resib run lint:html
+      - name: Check CSS
+        run: pnpm --filter=svelte-resib run lint:css
+      - name: Synchronize SvelteKit
+        run: pnpm --filter=svelte-resib run sync
+      - name: Check JavaScript
+        run: pnpm run lint:js
+      - name: Check Svelte
+        run: pnpm --filter=svelteresib run lint:svelte
+      - name: Build SvelteKit
+        run: pnpm --filter=svelteresib run build
