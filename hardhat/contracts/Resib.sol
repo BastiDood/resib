@@ -191,8 +191,8 @@ contract Resib {
         uint8 status; // void=0 | active=1 | processing=2 | availed=3
     }
 
-    function getOwnedWarranties() public view returns (CustomerWarrantyInfo[] memory) {
-        uint[] storage _warrantyIds = _customerWarranties[msg.sender];
+    function getOwnedWarranties(address _customer) public view returns (CustomerWarrantyInfo[] memory) {
+        uint[] storage _warrantyIds = _customerWarranties[_customer];
         CustomerWarrantyInfo[] memory _infos = new CustomerWarrantyInfo[](_warrantyIds.length);
         for (uint i = 0; i < _warrantyIds.length; ++i) {
             uint _warrantyId = _warrantyIds[i];

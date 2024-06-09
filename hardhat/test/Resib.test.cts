@@ -129,13 +129,13 @@ describe('Resib', () => {
             await expect(Owner.createWarranty(0n, owner)).emit(Owner, 'WarrantyCreated').withArgs(0n, 0n, 0n);
             await expect(Owner.createWarranty(0n, other)).emit(Owner, 'WarrantyCreated').withArgs(0n, 0n, 1n);
 
-            const [ownerWarranty, ...ownerRest] = await Owner.getOwnedWarranties();
+            const [ownerWarranty, ...ownerRest] = await Owner.getOwnedWarranties(owner);
             assert(typeof ownerWarranty !== 'undefined');
             expect(ownerRest).empty;
             expect(ownerWarranty.store).equals('Sample Store');
             expect(ownerWarranty.product).equals('Sample Product');
 
-            const [otherWarranty, ...otherRest] = await Other.getOwnedWarranties();
+            const [otherWarranty, ...otherRest] = await Other.getOwnedWarranties(owner);
             assert(typeof otherWarranty !== 'undefined');
             expect(otherRest).empty;
             expect(otherWarranty.store).equals('Sample Store');
@@ -153,7 +153,7 @@ describe('Resib', () => {
             await expect(Owner.createWarranty(0n, owner)).emit(Owner, 'WarrantyCreated').withArgs(0n, 0n, 0n);
 
             {
-                const [warranty, ...rest] = await Owner.getOwnedWarranties();
+                const [warranty, ...rest] = await Owner.getOwnedWarranties(owner);
                 assert(typeof warranty !== 'undefined');
                 expect(rest).empty;
                 expect(warranty.status).equals(1n);
@@ -161,7 +161,7 @@ describe('Resib', () => {
 
             {
                 await Owner.processWarrantyStatus(0n);
-                const [warranty, ...rest] = await Owner.getOwnedWarranties();
+                const [warranty, ...rest] = await Owner.getOwnedWarranties(owner);
                 assert(typeof warranty !== 'undefined');
                 expect(rest).empty;
                 expect(warranty.status).equals(2n);
@@ -169,7 +169,7 @@ describe('Resib', () => {
 
             {
                 await Owner.resetWarrantyStatus(0n);
-                const [warranty, ...rest] = await Owner.getOwnedWarranties();
+                const [warranty, ...rest] = await Owner.getOwnedWarranties(owner);
                 assert(typeof warranty !== 'undefined');
                 expect(rest).empty;
                 expect(warranty.status).equals(1n);
@@ -177,7 +177,7 @@ describe('Resib', () => {
 
             {
                 await Owner.voidWarrantyStatus(0n);
-                const [warranty, ...rest] = await Owner.getOwnedWarranties();
+                const [warranty, ...rest] = await Owner.getOwnedWarranties(owner);
                 assert(typeof warranty !== 'undefined');
                 expect(rest).empty;
                 expect(warranty.status).equals(0n);
@@ -196,7 +196,7 @@ describe('Resib', () => {
             await expect(Owner.createWarranty(0n, owner)).emit(Owner, 'WarrantyCreated').withArgs(0n, 0n, 0n);
 
             {
-                const [warranty, ...rest] = await Owner.getOwnedWarranties();
+                const [warranty, ...rest] = await Owner.getOwnedWarranties(owner);
                 assert(typeof warranty !== 'undefined');
                 expect(rest).empty;
                 expect(warranty.status).equals(1n);
@@ -204,7 +204,7 @@ describe('Resib', () => {
 
             {
                 await Owner.processWarrantyStatus(0n);
-                const [warranty, ...rest] = await Owner.getOwnedWarranties();
+                const [warranty, ...rest] = await Owner.getOwnedWarranties(owner);
                 assert(typeof warranty !== 'undefined');
                 expect(rest).empty;
                 expect(warranty.status).equals(2n);
@@ -212,7 +212,7 @@ describe('Resib', () => {
 
             {
                 await Owner.resetWarrantyStatus(0n);
-                const [warranty, ...rest] = await Owner.getOwnedWarranties();
+                const [warranty, ...rest] = await Owner.getOwnedWarranties(owner);
                 assert(typeof warranty !== 'undefined');
                 expect(rest).empty;
                 expect(warranty.status).equals(1n);
@@ -220,7 +220,7 @@ describe('Resib', () => {
 
             {
                 await Owner.processWarrantyStatus(0n);
-                const [warranty, ...rest] = await Owner.getOwnedWarranties();
+                const [warranty, ...rest] = await Owner.getOwnedWarranties(owner);
                 assert(typeof warranty !== 'undefined');
                 expect(rest).empty;
                 expect(warranty.status).equals(2n);
@@ -228,7 +228,7 @@ describe('Resib', () => {
 
             {
                 await Owner.availWarrantyStatus(0n);
-                const [warranty, ...rest] = await Owner.getOwnedWarranties();
+                const [warranty, ...rest] = await Owner.getOwnedWarranties(owner);
                 assert(typeof warranty !== 'undefined');
                 expect(rest).empty;
                 expect(warranty.status).equals(3n);
