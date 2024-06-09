@@ -10,30 +10,41 @@
 <script lang="ts">
     import { ArrowPath, CheckCircle, Clipboard, XMark } from '@steeze-ui/heroicons';
     import { AssertionError, assert } from '$lib/assert';
-    import type { BigNumberish } from 'ethers';
+    import type { BigNumberish, Signer } from 'ethers';
     import { Icon } from '@steeze-ui/svelte-icon';
     import { getToastStore } from '@skeletonlabs/skeleton';
+    import { invalidateAll } from '$app/navigation';
     import { resib } from '$lib/resib';
 
-    function resolveAction(mode: Mode) {
+    // eslint-disable-next-line init-declarations
+    export let disabled: boolean;
+    // eslint-disable-next-line init-declarations
+    export let signer: Signer;
+    // eslint-disable-next-line init-declarations
+    export let warranty: BigNumberish;
+    // eslint-disable-next-line init-declarations
+    export let mode: Mode;
+
+    function resolveAction(signer: Signer, mode: Mode) {
+        const runner = resib.connect(signer);
         switch (mode) {
             case Mode.Void:
-                return { action: resib.voidWarrantyStatus.bind(resib), icon: XMark, style: 'variant-filled-error' };
+                return { action: runner.voidWarrantyStatus.bind(runner), icon: XMark, style: 'variant-filled-error' };
             case Mode.Reset:
                 return {
-                    action: resib.resetWarrantyStatus.bind(resib),
+                    action: runner.resetWarrantyStatus.bind(runner),
                     icon: ArrowPath,
                     style: 'variant-filled-primary',
                 };
             case Mode.Process:
                 return {
-                    action: resib.processWarrantyStatus.bind(resib),
+                    action: runner.processWarrantyStatus.bind(runner),
                     icon: Clipboard,
                     style: 'variant-filled-warning',
                 };
             case Mode.Avail:
                 return {
-                    action: resib.availWarrantyStatus.bind(resib),
+                    action: runner.availWarrantyStatus.bind(runner),
                     icon: CheckCircle,
                     style: 'variant-filled-success',
                 };
@@ -42,13 +53,7 @@
         }
     }
 
-    // eslint-disable-next-line init-declarations
-    export let disabled: boolean;
-    // eslint-disable-next-line init-declarations
-    export let warranty: BigNumberish;
-    // eslint-disable-next-line init-declarations
-    export let mode: Mode;
-    $: ({ action, style, icon } = resolveAction(mode));
+    $: ({ action, style, icon } = resolveAction(signer, mode));
 
     const toast = getToastStore();
     async function click() {
@@ -57,6 +62,7 @@
             const response = await action(warranty);
             const receipt = await response.wait();
             assert(receipt !== null, 'receipt is null when performing an action');
+            await invalidateAll();
         } catch (err) {
             toast.trigger({
                 message: err instanceof Error ? `[${err.name}]: ${err.message}` : `${err}`,

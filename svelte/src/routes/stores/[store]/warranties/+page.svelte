@@ -40,8 +40,8 @@
                         </thead>
                         <tbody>
                             {#each warranties as { warranty, customer, startDate, endDate, status, product } (warranty)}
-                                {@const start = new Date(Number(startDate))}
-                                {@const end = new Date(Number(endDate))}
+                                {@const start = new Date(Number(startDate) * 1000)}
+                                {@const end = new Date(Number(endDate) * 1000)}
                                 <tr>
                                     <td>{warranty}</td>
                                     <td>{product}</td>
@@ -52,13 +52,13 @@
                                     <td>
                                         {#if status === 1n}
                                             <!-- ACTIVE -->
-                                            <UpdateStatusButton {warranty} mode={Mode.Void} bind:disabled />
-                                            <UpdateStatusButton {warranty} mode={Mode.Process} bind:disabled />
+                                            <UpdateStatusButton {signer} {warranty} mode={Mode.Void} bind:disabled />
+                                            <UpdateStatusButton {signer} {warranty} mode={Mode.Process} bind:disabled />
                                         {:else if status === 2n}
                                             <!-- PENDING -->
-                                            <UpdateStatusButton {warranty} mode={Mode.Void} bind:disabled />
-                                            <UpdateStatusButton {warranty} mode={Mode.Reset} bind:disabled />
-                                            <UpdateStatusButton {warranty} mode={Mode.Avail} bind:disabled />
+                                            <UpdateStatusButton {signer} {warranty} mode={Mode.Void} bind:disabled />
+                                            <UpdateStatusButton {signer} {warranty} mode={Mode.Reset} bind:disabled />
+                                            <UpdateStatusButton {signer} {warranty} mode={Mode.Avail} bind:disabled />
                                         {:else}
                                             None
                                         {/if}

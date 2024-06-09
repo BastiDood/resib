@@ -15,8 +15,8 @@
         class="grid place-items-center items-center justify-center gap-4 py-4 md:grid-cols-[repeat(auto-fill,minmax(22rem,1fr))] md:p-4"
     >
         {#each warranties as { store, product, startDate, endDate }}
-            {@const start = new Date(Number(startDate))}
-            {@const end = new Date(Number(endDate))}
+            {@const start = new Date(Number(startDate) * 1000)}
+            {@const end = new Date(Number(endDate) * 1000)}
             <div class="card card-hover variant-ghost-surface p-6 py-4">
                 <div class="aspect-[3.370/2.125] h-fit sm:h-48">
                     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
