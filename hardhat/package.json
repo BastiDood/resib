@@ -8,7 +8,8 @@
         "build": "tsup",
         "compile": "hardhat compile",
         "deploy": "hardhat ignition deploy ignition/modules/Resib.cts",
-        "test": "hardhat test"
+        "test": "hardhat test",
+        "typechain": "hardhat typechain"
     },
     "devDependencies": {
         "@nomicfoundation/hardhat-ethers": "^3.0.6",
