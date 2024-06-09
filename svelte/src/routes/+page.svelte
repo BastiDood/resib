@@ -25,27 +25,6 @@
     <div class="card card-hover block max-w-96">
         <header class="card-header">
             <enhanced:img
-                src="$lib/cards/pexels-kampus-8815843.jpeg"
-                alt="Store Owner"
-                class="aspect-video object-cover"
-            />
-        </header>
-        <section class="p-4">
-            <div class="grid">
-                <h3 class="h3 font-semibold">Store Owner</h3>
-                <p>
-                    Issues warranties, must repair/replace/refund items provided that they are still under warranty
-                    according to agreed upon specifications.
-                </p>
-            </div>
-        </section>
-        <footer class="card-footer">
-            <a href="/issue-warranty/" class="btn variant-filled">Issue Warranty</a>
-        </footer>
-    </div>
-    <div class="card card-hover block max-w-96">
-        <header class="card-header">
-            <enhanced:img
                 src="$lib/cards/pexels-adonyi-foto-1409215.jpeg"
                 alt="Customer"
                 class="aspect-video object-cover"
