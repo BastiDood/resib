@@ -1,6 +1,5 @@
 import '@nomicfoundation/hardhat-toolbox';
 import type { HardhatUserConfig } from 'hardhat/types';
-import assert from 'node:assert/strict';
 import { config } from 'dotenv';
 
 const { error, parsed } = config();
