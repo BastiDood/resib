@@ -70,6 +70,7 @@
         <table class="table-hover table">
             <thead>
                 <tr>
+                    <th>&num;</th>
                     <th>Name</th>
                     <th>Owner</th>
                 </tr>
@@ -77,6 +78,7 @@
             <tbody>
                 {#each stores as { name, owner }, id}
                     <tr>
+                        <td>{id}</td>
                         <td><a href="/stores/{id}/products/" class="anchor">{name}</a></td>
                         <td><code class="code">{owner}</code></td>
                     </tr>
