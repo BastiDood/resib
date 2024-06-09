@@ -7,6 +7,7 @@
     "scripts": {
         "build": "tsup",
         "compile": "hardhat compile",
+        "deploy": "hardhat ignition deploy ignition/modules/Resib.cts",
         "test": "REPORT_GAS=true hardhat test"
     },
     "devDependencies": {
@@ -15,6 +16,7 @@
         "@nomicfoundation/hardhat-toolbox": "^5.0.0",
         "@types/chai": "^4.3.16",
         "chai": "^4.4.1",
+        "dotenv": "^16.4.5",
         "ethers": "^6.13.0",
         "hardhat": "^2.22.5",
         "tsup": "^8.1.0"
