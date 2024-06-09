@@ -1,5 +1,6 @@
 <script>
     import { ProgressBar, getToastStore } from '@skeletonlabs/skeleton';
+    import Hero from '$lib/components/Hero.svelte';
     import { assert } from '$lib/assert';
     import { invalidateAll } from '$app/navigation';
     import { resib } from '$lib/resib';
@@ -64,6 +65,7 @@
     }
 </script>
 
+<Hero>View Products</Hero>
 <div class="space-y-4 p-4">
     {#await stores}
         <ProgressBar />

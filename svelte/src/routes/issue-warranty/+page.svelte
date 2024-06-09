@@ -35,7 +35,7 @@
             <input
                 type="number"
                 required
-                name="product-id"
+                name="product"
                 placeholder="Enter Product ID"
                 class="input variant-form-material"
             />

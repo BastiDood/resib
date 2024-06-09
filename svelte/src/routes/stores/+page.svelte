@@ -1,7 +1,8 @@
 <script>
+    import { LockClosed, Plus, Squares2x2 } from '@steeze-ui/heroicons';
     import { ProgressBar, getToastStore } from '@skeletonlabs/skeleton';
+    import Hero from '$lib/components/Hero.svelte';
     import { Icon } from '@steeze-ui/svelte-icon';
-    import { Plus } from '@steeze-ui/heroicons';
     import { assert } from '$lib/assert';
     import { goto } from '$app/navigation';
     import { resib } from '$lib/resib';
@@ -53,6 +54,7 @@
     }
 </script>
 
+<Hero>View Stores</Hero>
 <div class="table-container space-y-4 p-4">
     {#await stores}
         <ProgressBar />
@@ -64,7 +66,7 @@
             <div class="input-group input-group-divider grid-cols-[auto_1fr_auto] items-center">
                 <div class="input-group-shim h-full"><Icon src={Plus} theme="mini" class="size-8" /></div>
                 <input type="text" required name="store" placeholder="Resib" class="px-3 py-2" />
-                <button type="submit" class="variant-filled-secondary h-full">Create Store</button>
+                <button type="submit" class="variant-filled-primary h-full">Create Store</button>
             </div>
         </form>
         <table class="table-hover table">
@@ -73,14 +75,27 @@
                     <th>&num;</th>
                     <th>Name</th>
                     <th>Owner</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {#each stores as { name, owner }, id}
                     <tr>
                         <td>{id}</td>
-                        <td><a href="/stores/{id}/products/" class="anchor">{name}</a></td>
+                        <td>{name}</td>
                         <td><code class="code">{owner}</code></td>
+                        <td>
+                            <a href="/stores/{id}/products/" class="btn btn-sm variant-filled-secondary">
+                                <Icon src={Squares2x2} theme="micro" class="size-4" />
+                                <span>Products</span>
+                            </a>
+                            {#if signer !== null && signer.address === owner}
+                                <a href="/stores/{id}/warranties/" class="btn btn-sm variant-filled-tertiary">
+                                    <Icon src={LockClosed} theme="micro" class="size-4" />
+                                    <span>Warranties</span>
+                                </a>
+                            {/if}
+                        </td>
                     </tr>
                 {/each}
             </tbody>
