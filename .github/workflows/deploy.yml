@@ -42,7 +42,7 @@ jobs:
       - name: Synchronize SvelteKit
         run: pnpm --filter=svelte-resib run sync
       - name: Check JavaScript
-        run: pnpm run lint:js
+        run: pnpm --filter=svelte-resib run lint:js
       - name: Check Svelte
         run: pnpm --filter=svelteresib run lint:svelte
       - name: Build SvelteKit
