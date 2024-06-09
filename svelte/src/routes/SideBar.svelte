@@ -1,6 +1,6 @@
 <script>
     import { AppRail, AppRailAnchor, LightSwitch } from '@skeletonlabs/skeleton';
-    import { Home } from '@steeze-ui/heroicons';
+    import { BuildingStorefront, Home } from '@steeze-ui/heroicons';
     import { Icon } from '@steeze-ui/svelte-icon';
     import { page } from '$app/stores';
 
@@ -16,6 +16,10 @@
     <AppRailAnchor href="/" selected={pathname === '/'}>
         <Icon src={Home} slot="lead" class="size-8" />
         <span>Home</span>
+    </AppRailAnchor>
+    <AppRailAnchor href="/stores/" selected={pathname.startsWith('/stores/')}>
+        <Icon src={BuildingStorefront} slot="lead" class="size-8" />
+        <span>Stores</span>
     </AppRailAnchor>
     <img src={logoWithText} alt="Resib Shield Logo" slot="trail" class="block bg-transparent p-4 dark:bg-white" />
 </AppRail>

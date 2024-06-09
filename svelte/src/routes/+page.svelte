@@ -3,7 +3,25 @@
 </script>
 
 <Hero>Welcome to Resib</Hero>
-<div class="flex flex-col items-center justify-center gap-4 p-10 lg:flex-row">
+<div class="flex flex-col justify-center gap-4 p-10 lg:flex-row">
+    <div class="card card-hover block max-w-96">
+        <header class="card-header">
+            <enhanced:img
+                src="$lib/cards/pexels-kampus-8815843.jpeg"
+                alt="Store Owner"
+                class="aspect-video object-cover"
+            />
+        </header>
+        <section class="p-4">
+            <div class="grid">
+                <h3 class="h3 font-semibold">For Owners &amp; Customers</h3>
+                <p>See all the available stores.</p>
+            </div>
+        </section>
+        <footer class="card-footer">
+            <a href="/stores/" class="btn variant-filled">View Stores</a>
+        </footer>
+    </div>
     <div class="card card-hover block max-w-96">
         <header class="card-header">
             <enhanced:img
@@ -22,7 +40,7 @@
             </div>
         </section>
         <footer class="card-footer">
-            <a href="/issue-warranty" class="btn variant-filled">Issue Warranty</a>
+            <a href="/issue-warranty/" class="btn variant-filled">Issue Warranty</a>
         </footer>
     </div>
     <div class="card card-hover block max-w-96">
@@ -43,7 +61,7 @@
             </div>
         </section>
         <footer class="card-footer">
-            <a href="/view-warranty" class="btn variant-filled">View Warranties</a>
+            <a href="/view-warranty/" class="btn variant-filled">View Warranties</a>
         </footer>
     </div>
 </div>
