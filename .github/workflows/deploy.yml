@@ -44,6 +44,6 @@ jobs:
       - name: Check JavaScript
         run: pnpm --filter=svelte-resib run lint:js
       - name: Check Svelte
-        run: pnpm --filter=svelteresib run lint:svelte
+        run: pnpm --filter=svelte-resib run lint:svelte
       - name: Build SvelteKit
-        run: pnpm --filter=svelteresib run build
+        run: pnpm --filter=svelte-resib run build
