@@ -1,6 +1,6 @@
 <script>
     import './app.css';
-    import { AppShell, setInitialClassState } from '@skeletonlabs/skeleton';
+    import { AppShell, Toast, initializeStores, setInitialClassState } from '@skeletonlabs/skeleton';
     import SideBar from './SideBar.svelte';
     import { browser } from '$app/environment';
 
@@ -8,6 +8,8 @@
     import favicon16 from '$lib/favicon/favicon-16x16.png?url';
     import favicon32 from '$lib/favicon/favicon-32x32.png?url';
     import faviconApple from '$lib/favicon/apple-touch-icon.png?url';
+
+    initializeStores();
 
     // HACK: Workaround for Skeleton not setting the dark mode for SPAs.
     if (browser) setInitialClassState();
@@ -19,7 +21,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href={favicon32} />
     <link rel="apple-touch-icon" sizes="180x180" href={faviconApple} />
 </svelte:head>
-
+<Toast />
 <AppShell>
     <SideBar slot="sidebarLeft" />
     <slot />
