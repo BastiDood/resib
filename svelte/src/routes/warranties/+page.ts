@@ -6,6 +6,6 @@ async function getOwnedWarranties(parent: PageLoadEvent['parent']) {
     return signer === null ? [] : await resib.getOwnedWarranties(signer.address);
 }
 
-export async function load({ parent }) {
+export function load({ parent }) {
     return { warranties: getOwnedWarranties(parent) };
 }
