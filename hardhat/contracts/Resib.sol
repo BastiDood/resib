@@ -192,13 +192,13 @@ contract Resib {
     }
 
     function getOwnedWarranties() public view returns (CustomerWarrantyInfo[] memory) {
-        uint[] memory _warrantyIds = _customerWarranties[msg.sender];
+        uint[] storage _warrantyIds = _customerWarranties[msg.sender];
         CustomerWarrantyInfo[] memory _infos = new CustomerWarrantyInfo[](_warrantyIds.length);
         for (uint i = 0; i < _warrantyIds.length; ++i) {
             uint _warrantyId = _warrantyIds[i];
-            Warranty memory _warranty = _warranties[_warrantyId];
-            Product memory _product = _products[_warranty.product];
-            Store memory _store = _stores[_product.store];
+            Warranty storage _warranty = _warranties[_warrantyId];
+            Product storage _product = _products[_warranty.product];
+            Store storage _store = _stores[_product.store];
             _infos[i] = CustomerWarrantyInfo(
                 _store.name,
                 _product.name,
