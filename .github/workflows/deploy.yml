@@ -1,4 +1,4 @@
-name: Deploy
+name: Code Quality
 
 on:
   push:
@@ -51,12 +51,3 @@ jobs:
         run: pnpm --filter=svelte-resib run lint:svelte
       - name: Build SvelteKit
         run: pnpm --filter=svelte-resib run build
-      - name: Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_KEY }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
-          projectName: resib
-          directory: svelte/build
