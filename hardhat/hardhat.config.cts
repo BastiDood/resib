@@ -2,10 +2,10 @@ import '@nomicfoundation/hardhat-toolbox';
 import type { HardhatUserConfig } from 'hardhat/types';
 import { config } from 'dotenv';
 
-const { error, parsed } = config();
-if (typeof error !== 'undefined') throw error;
+const { error } = config();
+if (typeof error !== 'undefined') console.error(error);
 
-const { WALLET_PRV_KEY } = parsed ?? {};
+const { WALLET_PRV_KEY } = process.env;
 const accounts = WALLET_PRV_KEY ? [WALLET_PRV_KEY] : [];
 
 export default {
