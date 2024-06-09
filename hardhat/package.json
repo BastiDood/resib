@@ -8,7 +8,7 @@
         "build": "tsup",
         "compile": "hardhat compile",
         "deploy": "hardhat ignition deploy ignition/modules/Resib.cts",
-        "test": "REPORT_GAS=true hardhat test"
+        "test": "hardhat test"
     },
     "devDependencies": {
         "@nomicfoundation/hardhat-ethers": "^3.0.6",

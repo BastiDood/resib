@@ -9,8 +9,10 @@ const { WALLET_PRV_KEY } = parsed ?? {};
 const accounts = WALLET_PRV_KEY ? [WALLET_PRV_KEY] : [];
 
 export default {
-    solidity: '0.8.24',
-    defaultNetwork: 'arbitrum-sepolia',
+    solidity: {
+        version: '0.8.24',
+        settings: { optimizer: { enabled: true, runs: 1000 } },
+    },
     networks: {
         'arbitrum-sepolia': {
             url: 'https://arbitrum-sepolia.blockpi.network/v1/rpc/public',
@@ -18,4 +20,5 @@ export default {
             accounts,
         },
     },
+    gasReporter: { enabled: true },
 } satisfies HardhatUserConfig;
