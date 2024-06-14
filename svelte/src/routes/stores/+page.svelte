@@ -29,7 +29,7 @@
         button.disabled = true;
         try {
             const response = await resib.connect(signer).createStore(store);
-            const receipt = await response.wait(10);
+            const receipt = await response.wait(2);
             assert(receipt !== null, 'transaction receipt is null');
             const [log, ...logsRest] = receipt.logs;
             assert(logsRest.length === 0, 'unexpected extra logs when creating store');
